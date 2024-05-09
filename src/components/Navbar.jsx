@@ -1,10 +1,26 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { AuthContext } from "../providers/AuthProvider";
+import { Tooltip } from "react-tooltip";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
 
-    const {siteName} = useContext(SiteDetailsContext);
+    const { siteName } = useContext(SiteDetailsContext);
+
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleSignOut = () => {
+        logOut()
+            .then(() => {
+                toast.success('Logged out success!');
+            })
+            .catch(error => {
+                toast.error(error.messagee);
+            })
+    }
 
     const navLinks = <>
         <li><NavLink to="/">Home</NavLink></li>
@@ -32,8 +48,43 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <Link to="/login" className="btn">Login</Link>
+                <div className="navbar-end gap-4">
+                    {
+                        user ?
+                            <div className="flex gap-2 items-center">
+                                <div className="dropdown dropdown-end">
+                                    <div tabIndex={0} role="button" className="btn rToolTip btn-ghost btn-circle avatar !flex">
+                                        <div className="w-10">
+                                            {
+                                                user.photoURL ?
+                                                    <img className="rounded-full" src={user.photoURL} />
+                                                    :
+                                                    <FaRegCircleUser className="w-10 text-blue-600 h-10" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 text-black dark:text-gray-300 rounded-box w-52">
+                                        <li>
+                                            <Link to="/countries" className="">All Countries</Link>
+                                        </li>
+                                        <li>
+                                            <button onClick={handleSignOut} className="">Log Out</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <Tooltip anchorSelect=".rToolTip" place="bottom">
+                                    {user.displayName ?? 'User name not set'}
+                                </Tooltip>
+                                <div>
+                                    <button onClick={handleSignOut} className="btn btn-secondary bg-red-600 dark:text-white hover:bg-red-700">Log Out</button>
+                                </div>
+                            </div>
+                            :
+                            <div className="flex gap-3">
+                                <Link to="/login" className="btn ">Login</Link>
+                                <Link to="/register" className="btn btn-primary">Register</Link>
+                            </div>
+                    }
                 </div>
             </div>
         </div>
