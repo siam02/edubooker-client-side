@@ -1,12 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 
 const Navbar = () => {
 
+    const {siteName} = useContext(SiteDetailsContext);
+
     const navLinks = <>
         <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/all-tourists-spot">All Tourists Spot</NavLink></li>
-        <li><NavLink to="/add-tourists-spot">Add Tourists Spot</NavLink></li>
-        <li><NavLink to="/my-list">My List</NavLink></li>
+        <li><NavLink to="/add-book">Add Book</NavLink></li>
+        <li><NavLink to="/all-books">All Books</NavLink></li>
+        <li><NavLink to="/borrowed-books">Borrowed Books</NavLink></li>
     </>
 
     return (
@@ -21,7 +25,7 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <a className="btn btn-ghost text-xl">{siteName}</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -29,7 +33,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    <Link to="/login" className="btn">Login</Link>
                 </div>
             </div>
         </div>
