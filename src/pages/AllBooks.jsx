@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { Helmet } from "react-helmet";
 import BookCard from "../components/BookCard";
+import { toast } from "react-toastify";
 
 const AllBooks = () => {
 
@@ -52,6 +53,21 @@ const AllBooks = () => {
         }
     }
 
+    const handleSort = () => {
+        setLoading(true);
+        fetch(`http://localhost:5000/book-sort-by-rating`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setBooks(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                toast.error(error);
+                setLoading(false);
+            })
+    }
+
 
     return (
         <div className="mx-auto px-4 py-8">
@@ -64,7 +80,7 @@ const AllBooks = () => {
                     <details className="dropdown">
                         <summary className="m-1 btn">Sort By</summary>
                         <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                            {/* <li><button onClick={() => handleSort('desc')}>Rating</button></li> */}
+                            <li><button onClick={handleSort}>Rating</button></li>
                         </ul>
                     </details>
                 </div>
