@@ -23,11 +23,12 @@ const AddBook = () => {
         const image = form.image.value;
         const name = form.name.value;
         const author_name = form.name.author_name;
+        const category = form.name.category;
         const short_description = form.short_description.value;
         const quantity = parseInt(form.quantity.value);
         const rating = parseInt(form.rating.value);
 
-        const newTouristsSpot = { image, name, quantity, location, short_description, rating, author_name }
+        const newTouristsSpot = { image, name, quantity, location, short_description, rating, author_name, category }
 
         fetch('https://southest-explorer-server-opbmjysgv.vercel.app/tourists-spot', {
             method: 'POST',
@@ -114,17 +115,6 @@ const AddBook = () => {
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
                     </div>
-                    <div className="md:col-span-2">
-                        <label htmlFor="short_description" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Short Description
-                        </label>
-                        <textarea
-                            id="short_description"
-                            name="short_description"
-                            required
-                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
-                        ></textarea>
-                    </div>
                     <div>
                         <label htmlFor="rating" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Rating
@@ -138,6 +128,35 @@ const AddBook = () => {
                             placeholder="1-5"
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
+                    </div>
+                    <div>
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Category
+                        </label>
+                        <select
+                            id="category"
+                            name="category"
+                            type="text"
+                            required
+                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
+                        >
+                            <option value="Novel">Novel</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="History">History</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                        </select>
+                    </div>
+                    <div className="md:col-span-2">
+                        <label htmlFor="short_description" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Short Description
+                        </label>
+                        <textarea
+                            id="short_description"
+                            name="short_description"
+                            required
+                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
+                        ></textarea>
                     </div>
                 </div>
                 <div className="mt-4">
