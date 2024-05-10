@@ -7,6 +7,7 @@ import Profile from "../pages/Profile";
 import PrivateRoutes from "./PrivateRoutes";
 import AddBook from "../pages/AddBook";
 import AllBooks from "../pages/AllBooks";
+import UpdateBook from "../pages/UpdateBook";
 
 const routes = createBrowserRouter([
     {
@@ -36,6 +37,11 @@ const routes = createBrowserRouter([
             {
                 path:'/all-books',
                 element:<PrivateRoutes><AllBooks></AllBooks></PrivateRoutes>
+            },
+            {
+                path:'/update-book/:id',
+                element:<PrivateRoutes><UpdateBook></UpdateBook></PrivateRoutes>,
+                loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
             }
         ]
     }

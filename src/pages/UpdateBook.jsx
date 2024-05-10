@@ -1,21 +1,22 @@
-import { useContext, useState } from "react";
 import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
-import Swal from "sweetalert2";
+import { useContext, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
-const AddBook = () => {
-
+const UpdateBook = () => {
     const { siteName } = useContext(SiteDetailsContext);
-    const [addText, setAddText] = useState('Add');
-    // const [loading, setLoading] = useState(true);
+    const [updateText, setUpdateText] = useState("Submit");
+    const book = useLoaderData();
+    const { image, name, author_name, rating, category, _id } = book;
+    const [bookImage, setBookImage] = useState(image);
 
-    
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        setAddText(
+        setUpdateText(
             <span className="loading loading-spinner loading-xs"></span>
         )
 
@@ -24,37 +25,34 @@ const AddBook = () => {
         const name = form.name.value;
         const author_name = form.author_name.value;
         const category = form.category.value;
-        const short_description = form.short_description.value;
-        const quantity = parseInt(form.quantity.value);
         const rating = parseInt(form.rating.value);
 
         if (rating < 1 || rating > 5) {
             toast.error("Rating must be between 1 to 5");
-            setAddText("Add");
+            setUpdateText("Submit");
             return 0;
         }
 
-        const newBook = { image, name, quantity, short_description, rating, author_name, category }
+        const updateBook = { image, name, rating, author_name, category }
 
-        fetch('http://localhost:5000/book', {
-            method: 'POST',
+        fetch(`http://localhost:5000/book/${_id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(newBook)
+            body: JSON.stringify(updateBook)
         })
             .then(res => res.json())
             .then(data => {
-                setAddText("Add");
-                if (data.insertedId) {
+                setUpdateText("Submit");
+                setBookImage(image);
+                if (data.modifiedCount > 0) {
                     Swal.fire({
                         title: 'Success!',
-                        text: 'New Book Added Successfully',
+                        text: 'Book Updated Successfully',
                         icon: 'success',
-                        confirmButtonText: 'Cool'
+                        confirmButtonText: 'Awesome'
                     })
-
-                    form.reset();
                 }
             })
             .catch(error => {
@@ -64,12 +62,16 @@ const AddBook = () => {
 
     }
 
+
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="mt-10">
             <Helmet>
-                <title>Add Book on {siteName}</title>
+                <title>Update Book -  - {siteName}</title>
             </Helmet>
-            <h2 className="text-3xl font-bold mb-4">Add New Book</h2>
+            <h2 className="text-3xl font-bold mb-4">Update Book - {name}</h2>
+            <div className="mb-4">
+                <img src={bookImage} alt="" className="mx-auto rounded-xl h-96" />
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -79,8 +81,9 @@ const AddBook = () => {
                         <input
                             id="image"
                             name="image"
-                            type="text"
+                            type="url"
                             required
+                            defaultValue={image}
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
                     </div>
@@ -93,18 +96,7 @@ const AddBook = () => {
                             name="name"
                             type="text"
                             required
-                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Quantity of book
-                        </label>
-                        <input
-                            id="quantity"
-                            name="quantity"
-                            type="number"
-                            required
+                            defaultValue={name}
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
                     </div>
@@ -116,6 +108,7 @@ const AddBook = () => {
                             id="author_name"
                             name="author_name"
                             type="text"
+                            defaultValue={author_name}
                             required
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
@@ -130,6 +123,7 @@ const AddBook = () => {
                             type="number"
                             min="1" max="5"
                             required
+                            defaultValue={rating}
                             placeholder="1-5"
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         />
@@ -143,6 +137,7 @@ const AddBook = () => {
                             name="category"
                             type="text"
                             required
+                            defaultValue={category}
                             className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
                         >
                             <option value="Novel">Novel</option>
@@ -152,24 +147,13 @@ const AddBook = () => {
                             <option value="Sci-Fi">Sci-Fi</option>
                         </select>
                     </div>
-                    <div className="md:col-span-2">
-                        <label htmlFor="short_description" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Short Description
-                        </label>
-                        <textarea
-                            id="short_description"
-                            name="short_description"
-                            required
-                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
-                        ></textarea>
-                    </div>
                 </div>
                 <div className="mt-4">
                     <button
                         type="submit"
                         className="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md btn btn-primary"
                     >
-                        {addText}
+                        {updateText}
                     </button>
                 </div>
             </form>
@@ -177,4 +161,4 @@ const AddBook = () => {
     );
 };
 
-export default AddBook;
+export default UpdateBook;
