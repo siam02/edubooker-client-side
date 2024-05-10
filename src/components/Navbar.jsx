@@ -1,17 +1,31 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { AuthContext } from "../providers/AuthProvider";
 import { Tooltip } from "react-tooltip";
 import { toast } from "react-toastify";
-import logo from "../assets/img/logo.png";
+import blackLogo from "../assets/img/logo.png";
+import whiteLogo from "../assets/img/whiteLogo.png";
+import PropTypes from 'prop-types';
 
-const Navbar = () => {
+const Navbar = ({theme}) => {
 
     const { siteName } = useContext(SiteDetailsContext);
 
     const { user, logOut } = useContext(AuthContext);
+
+    const [logo, setLogo] = useState(blackLogo);
+
+    // const localTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") ? localStorage.getItem("theme") : "light" ;
+
+    useEffect(() => {
+        if (theme === "light") {
+            setLogo(blackLogo);
+        }else if(theme === "dark"){
+            setLogo(whiteLogo);
+        }
+    }, [theme])
 
     const handleSignOut = () => {
         logOut()
@@ -97,5 +111,9 @@ const Navbar = () => {
         </div>
     );
 };
+
+Navbar.propTypes = {
+    theme: PropTypes.string
+}
 
 export default Navbar;
