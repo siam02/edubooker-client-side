@@ -50,28 +50,27 @@ const BookCard = ({ book }) => {
             {
                 deleted ? '' :
 
-                    <div>
-                        <div className="card bg-base-100 shadow-xl">
-                            <figure><img src={image} alt={name} className='h-64 pt-8' /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title">{name}</h2>
-                                <div className='flex items-center gap-2'>
-                                    <Rating
-                                        initialRating={rating}
-                                        emptySymbol={<FaRegStar />}
-                                        fullSymbol={<FaStar />}
-                                        readonly
-                                    />
-                                </div>
-                                <div className='flex gap-4 mb-4 justify-between'>
-                                    <span><span className='font-medium'>By:</span> {author_name}</span>
-                                    <span><span className='font-medium'>Category:</span> {category}</span>
-                                </div>
-                                <div className="card-actions justify-end">
-                                    <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
-                                    <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
-                                </div>
-                            </div>
+                    <div className="border border-[#13131326] p-6 rounded-2xl flex flex-col">
+                        <div className="bg-gray-100 py-8 rounded-2xl">
+                            <img src={image} width={100} className='mx-auto' alt="" />
+                        </div>
+                        <h3 className='font-bold text-2xl my-4'>{name}</h3>
+                        <p className='font-medium text-[#131313CC] flex-grow'>By: {author_name}</p>
+                        <hr className='border-dashed my-5 border-[#13131326]' />
+                        <div className="flex justify-between font-medium text-[#131313CC]">
+                            <span>{category}</span>
+                            <span className='flex items-center justify-center gap-2'>
+                                <Rating
+                                    initialRating={rating}
+                                    emptySymbol={<FaRegStar />}
+                                    fullSymbol={<FaStar />}
+                                    readonly
+                                />
+                            </span>
+                        </div>
+                        <div className="card-actions justify-center mt-6">
+                            <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
+                            <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
                         </div>
                     </div>
             }
