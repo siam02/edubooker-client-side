@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -11,6 +11,8 @@ const UpdateBook = () => {
     const book = useLoaderData();
     const { image, name, author_name, rating, category, _id } = book;
     const [bookImage, setBookImage] = useState(image);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     const handleSubmit = e => {
@@ -61,6 +63,19 @@ const UpdateBook = () => {
 
 
     }
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/category`)
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error);
+            })
+    }, [])
 
 
     return (
@@ -132,20 +147,22 @@ const UpdateBook = () => {
                         <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Category
                         </label>
-                        <select
-                            id="category"
-                            name="category"
-                            type="text"
-                            required
-                            defaultValue={category}
-                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
-                        >
-                            <option value="Novel">Novel</option>
-                            <option value="Thriller">Thriller</option>
-                            <option value="History">History</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Sci-Fi">Sci-Fi</option>
-                        </select>
+                        {
+                            loading ? <span className="loading text-indigo-600 loading-spinner loading-xs"></span>
+                                :
+                                <select
+                                    id="category"
+                                    name="category"
+                                    type="text"
+                                    required
+                                    defaultValue={category}
+                                    className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
+                                >
+                                    {
+                                        categories.map(category => <option value={category.name} key={category._id}>{category.name}</option>)
+                                    }
+                                </select>
+                        }
                     </div>
                 </div>
                 <div className="mt-4">
