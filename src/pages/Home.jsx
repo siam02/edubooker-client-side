@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,11 +9,28 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { useLoaderData } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
+import { toast } from "react-toastify";
+import CategoryCard from "../components/CategoryCard";
 
 const Home = () => {
 
     const { siteName } = useContext(SiteDetailsContext);
     const latestBooks = useLoaderData();
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/category`)
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error);
+            })
+    }, [])
 
     return (
         <div>
@@ -40,6 +57,21 @@ const Home = () => {
                         </Swiper>
                     </div>
                 </div>
+            </div>
+            <div className="my-28">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold">Categories</h2>
+                    <p className="max-w-3xl mt-4 mx-auto">Discover a wide range of literary genres and themes in our All Categories section, catering to every reader&apos;s taste and interest.</p>
+                </div>
+                {
+                    loading ? <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-indigo-600"></span></div>
+                        :
+                        <div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {categories.map((category) => <CategoryCard key={category._id} category={category} ></CategoryCard>)}
+                            </div>
+                        </div>
+                }
             </div>
         </div>
     );
