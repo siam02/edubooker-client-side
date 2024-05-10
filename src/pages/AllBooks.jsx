@@ -72,8 +72,8 @@ const AllBooks = () => {
             {
                 loading ? <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                     :
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {books.map((book) => <BookCard key={book._id} book={book} showImage={true} showTravelTime={true} showShortDescription={false} showCountryName={false} showTotalVisitor={true} ></BookCard>)}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {books.map((book) => <BookCard key={book._id} book={book} ></BookCard>)}
                     </div>
             }
 
@@ -81,7 +81,7 @@ const AllBooks = () => {
 
 
             </div>
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex justify-center mt-12 items-center gap-3">
                 <div className="join">
                     <button className="join-item btn" onClick={handlePrevPage}>«</button>
                     {
