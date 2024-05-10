@@ -28,6 +28,12 @@ const AddBook = () => {
         const quantity = parseInt(form.quantity.value);
         const rating = parseInt(form.rating.value);
 
+        if (rating < 1 || rating > 5) {
+            toast.error("Rating must be between 1 to 5");
+            setAddText("Add");
+            return 0;
+        }
+
         const newTouristsSpot = { image, name, quantity, short_description, rating, author_name, category }
 
         fetch('http://localhost:5000/book', {
