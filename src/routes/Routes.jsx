@@ -48,7 +48,8 @@ const routes = createBrowserRouter([
             },
             {
                 path:'/categories',
-                element:<PrivateRoutes><Categories></Categories></PrivateRoutes>
+                element:<PrivateRoutes><Categories></Categories></PrivateRoutes>,
+                loader: () => fetch('http://localhost:5000/category')
             },
             {
                 path:'/add-category',
