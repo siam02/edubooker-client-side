@@ -80,7 +80,7 @@ const Navbar = () => {
                                     {user.displayName ?? 'User name not set'}
                                 </Tooltip>
                                 <div>
-                                    <button onClick={handleSignOut} className="btn btn-secondary bg-red-600 dark:text-white hover:bg-red-700">Log Out</button>
+                                    <button onClick={handleSignOut} className="btn btn-error">Log Out</button>
                                 </div>
                             </div>
                             :
