@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import Swal from "sweetalert2";
@@ -8,7 +8,8 @@ const AddBook = () => {
 
     const { siteName } = useContext(SiteDetailsContext);
     const [addText, setAddText] = useState('Add');
-    // const [loading, setLoading] = useState(true);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     
 
@@ -63,6 +64,19 @@ const AddBook = () => {
 
 
     }
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/category`)
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error);
+            })
+    }, [])
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
@@ -138,19 +152,21 @@ const AddBook = () => {
                         <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Category
                         </label>
-                        <select
-                            id="category"
-                            name="category"
-                            type="text"
-                            required
-                            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
-                        >
-                            <option value="Novel">Novel</option>
-                            <option value="Thriller">Thriller</option>
-                            <option value="History">History</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Sci-Fi">Sci-Fi</option>
-                        </select>
+                        {
+                            loading ? <span className="loading text-indigo-600 loading-spinner loading-xs"></span>
+                                :
+                                <select
+                                    id="category"
+                                    name="category"
+                                    type="text"
+                                    required
+                                    className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full"
+                                >
+                                    {
+                                        categories.map(category => <option value={category.name} key={category._id}>{category.name}</option>)
+                                    }
+                                </select>
+                        }
                     </div>
                     <div className="md:col-span-2">
                         <label htmlFor="short_description" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
