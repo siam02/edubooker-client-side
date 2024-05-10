@@ -22,15 +22,15 @@ const AddBook = () => {
         const form = e.target;
         const image = form.image.value;
         const name = form.name.value;
-        const author_name = form.name.author_name;
-        const category = form.name.category;
+        const author_name = form.author_name.value;
+        const category = form.category.value;
         const short_description = form.short_description.value;
         const quantity = parseInt(form.quantity.value);
         const rating = parseInt(form.rating.value);
 
-        const newTouristsSpot = { image, name, quantity, location, short_description, rating, author_name, category }
+        const newTouristsSpot = { image, name, quantity, short_description, rating, author_name, category }
 
-        fetch('https://southest-explorer-server-opbmjysgv.vercel.app/tourists-spot', {
+        fetch('http://localhost:5000/book', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
