@@ -9,6 +9,7 @@ import AddBook from "../pages/AddBook";
 import AllBooks from "../pages/AllBooks";
 import UpdateBook from "../pages/UpdateBook";
 import Categories from "../pages/Categories";
+import AddCategory from "../pages/AddCategory";
 
 const routes = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
             {
                 path:'/categories',
                 element:<PrivateRoutes><Categories></Categories></PrivateRoutes>
+            },
+            {
+                path:'/add-category',
+                element:<PrivateRoutes><AddCategory></AddCategory></PrivateRoutes>
             }
         ]
     }
