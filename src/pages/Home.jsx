@@ -23,7 +23,7 @@ const Home = () => {
             <div className="hero my-28">
                 <div className="hero-content gap-10 !p-0 grid grid-cols-1 lg:grid-cols-2">
                     <div className="">
-                        <h1 className="text-5xl font-bold">Explore <span className="text-red-600"><Typewriter words={['Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi']} loop={0} /></span></h1>
+                        <h1 className="text-5xl font-bold">Explore <span className="text-primary"><Typewriter words={['Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi']} loop={0} /></span></h1>
                         <p className="py-6">Welcome to EduBooker, your gateway to a world of knowledge and adventure. Explore our vast collection of books across multiple genres and embark on a journey of discovery today!</p>
                         <button className="btn btn-primary">Get Started</button>
                     </div>
