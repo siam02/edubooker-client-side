@@ -39,9 +39,9 @@ const Register = () => {
         const pattern = /[A-Z]/;
         return pattern.test(str);
     }
-    const hasLowercase = (str) => {
-        const pattern = /[a-z]/;
-        return pattern.test(str);
+    const hasSpecialCharacter = (str) => {
+        const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+        return specialCharRegex.test(str);
     }
     const hasValidLength = (str) => {
         return str.length >= 6;
@@ -85,8 +85,8 @@ const Register = () => {
             return null;
         }
 
-        if (!hasLowercase(password)) {
-            setError('Password must contain at least one Lower Case');
+        if (!hasSpecialCharacter(password)) {
+            setError('Password must contain at least one Special Character');
             setRegisterText('Register');
             return null;
         }
@@ -97,7 +97,7 @@ const Register = () => {
             return null;
         }
 
-        if (hasUppercase(password) && hasLowercase(password) && hasValidLength(password) && isEmail(email) && isURL(photo)) {
+        if (hasUppercase(password) && hasSpecialCharacter(password) && hasValidLength(password) && isEmail(email) && isURL(photo)) {
             setError(null);
         }
 
