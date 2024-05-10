@@ -42,10 +42,10 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">
+                    <Link className="btn btn-ghost text-xl">
                         <img src={logo} alt="" width={24} />
                         {siteName}
-                    </a>
+                    </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
