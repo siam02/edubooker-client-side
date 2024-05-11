@@ -51,8 +51,9 @@ const BookDetails = () => {
             const book_id = _id;
             const user_name = user.displayName;
             const user_email = user.email;
+            const borrowed_date = new Date().toISOString().slice(0, 10);
 
-            const borrowBook = { return_date, book_id, user_name, user_email }
+            const borrowBook = { return_date, book_id, user_name, user_email, borrowed_date }
 
             fetch('http://localhost:5000/borrowed-book', {
                 method: 'POST',

@@ -6,10 +6,10 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 
-const BookCard = ({ book, showDetailsBtn }) => {
+const BookCard = ({ book, showDetailsBtn, is_borrowed, returnDate, borrowedDate }) => {
 
 
-    const { image, name, author_name, _id, category, rating } = book;
+    const { image, name, author_name, _id, category, rating, quantity } = book;
     const [deleted, setDeleted] = useState(false);
 
     const handleDelete = id => {
@@ -44,6 +44,53 @@ const BookCard = ({ book, showDetailsBtn }) => {
         })
     }
 
+    const handleReturn = id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to reaturn this book?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, return it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+                fetch(`http://localhost:5000/borrowed-book/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+
+                            const updateBook = { quantity: quantity + 1 };
+
+                            fetch(`http://localhost:5000/update-book-quantity/${id}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(updateBook)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data);
+                                })
+                                .catch(err => console.log(err))
+                            Swal.fire(
+                                'Returned!',
+                                'You have successfully returned the book',
+                                'success'
+                            )
+                            setDeleted(true);
+                        }
+                    })
+
+            }
+        })
+    }
+
 
     return (
         <>
@@ -63,8 +110,20 @@ const BookCard = ({ book, showDetailsBtn }) => {
                                         readonly
                                     />
                                 </div>
-                                <div className='flex gap-4 mb-4 justify-between'>
-                                    <span><span className='font-medium'>By:</span> {author_name}</span>
+                                <div className={`flex ${is_borrowed && 'flex-col'} flex-wrap gap-2 mb-4 justify-between`}>
+                                    {
+                                        is_borrowed || <span><span className='font-medium'>By:</span> {author_name}</span>
+                                    }
+
+                                    {
+                                        is_borrowed &&
+                                        <>
+                                            <span><span className='font-medium'>Return Date:</span> {returnDate}</span>
+                                            <span><span className='font-medium'>Borrowed Date:</span> {borrowedDate}</span>
+                                        </>
+
+                                    }
+
                                     <span><span className='font-medium'>Category:</span> {category}</span>
                                 </div>
                                 <div className="card-actions justify-end">
@@ -72,10 +131,13 @@ const BookCard = ({ book, showDetailsBtn }) => {
                                         showDetailsBtn ?
                                             <Link to={`/book/${_id}`} className="btn w-full btn-primary">Details</Link>
                                             :
-                                            <>
-                                                <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
-                                                <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
-                                            </>
+                                            is_borrowed ?
+                                                <button onClick={() => handleReturn(book._id)} className="btn btn-secondary w-full">Return</button>
+                                                :
+                                                <>
+                                                    <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
+                                                    <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
+                                                </>
                                     }
 
                                 </div>
@@ -89,7 +151,10 @@ const BookCard = ({ book, showDetailsBtn }) => {
 
 BookCard.propTypes = {
     book: PropTypes.object.isRequired,
-    showDetailsBtn: PropTypes.bool
+    showDetailsBtn: PropTypes.bool,
+    is_borrowed: PropTypes.bool,
+    returnDate: PropTypes.string,
+    borrowedDate: PropTypes.string
 }
 
 export default BookCard;
