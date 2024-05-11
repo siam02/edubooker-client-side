@@ -1,16 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import BookCard from "../components/BookCard";
+import { AuthContext } from "../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const CategoryDetails = () => {
     const category = useLoaderData();
+    const navigate = useNavigate();
 
-    const { name, image } = category;
+    const { name, image, _id } = category;
     const { siteName } = useContext(SiteDetailsContext);
+    const { user } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
+    const [deleleText, setDeleteText] = useState("Delete");
 
     const [books, setBooks] = useState([]);
 
@@ -26,6 +31,35 @@ const CategoryDetails = () => {
             })
     }, [name])
 
+    const handleDelete = id => {
+        setDeleteText(<span className="loading loading-spinner loading-xs"></span>);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this Category? You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+                fetch(`http://localhost:5000/category/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            toast.success("Category Deleted")
+                            navigate('/categories');
+                        }
+                    })
+
+            }
+        })
+    }
+
     return (
         <div className="my-8">
             <Helmet>
@@ -35,6 +69,13 @@ const CategoryDetails = () => {
                 <figure><img src={image} alt="Shoes" className="w-full" /></figure>
                 <div className="card-body text-center dark:!text-neutral-200 justify-center">
                     <h2 className="card-title justify-center text-5xl">{name}</h2>
+                    {
+                        user &&
+                        <div className="flex gap-4 justify-center mt-6">
+                            <button onClick={() => handleDelete(_id)} className="btn btn-error">{deleleText}</button>
+                            <Link className="btn btn-primary">Update</Link>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="my-16">
