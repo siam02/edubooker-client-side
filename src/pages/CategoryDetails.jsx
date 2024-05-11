@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
@@ -73,7 +73,6 @@ const CategoryDetails = () => {
                         user &&
                         <div className="flex gap-4 justify-center mt-6">
                             <button onClick={() => handleDelete(_id)} className="btn btn-error">{deleleText}</button>
-                            <Link className="btn btn-primary">Update</Link>
                         </div>
                     }
                 </div>
