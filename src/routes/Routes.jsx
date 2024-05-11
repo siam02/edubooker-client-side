@@ -11,11 +11,13 @@ import UpdateBook from "../pages/UpdateBook";
 import Categories from "../pages/Categories";
 import AddCategory from "../pages/AddCategory";
 import CategoryDetails from "../pages/CategoryDetails";
+import ErrorPage from "../pages/ErrorPage";
 
 const routes = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path: '/',
