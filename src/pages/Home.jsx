@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { toast } from "react-toastify";
 import CategoryCard from "../components/CategoryCard";
@@ -42,7 +42,7 @@ const Home = () => {
                     <div className="">
                         <h1 className="text-5xl font-bold">Explore <span className="text-primary"><Typewriter words={['Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi']} loop={0} /></span></h1>
                         <p className="py-6">Welcome to EduBooker, your gateway to a world of knowledge and adventure. Explore our vast collection of books across multiple genres and embark on a journey of discovery today!</p>
-                        <button className="btn btn-primary">Get Started</button>
+                        <Link to="/categories" className="btn btn-primary">Browse Categories</Link>
                     </div>
                     <div className="flex">
                         <Swiper
