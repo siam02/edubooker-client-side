@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, showDetailsBtn }) => {
 
 
     const { image, name, author_name, _id, category, rating } = book;
@@ -68,8 +68,16 @@ const BookCard = ({ book }) => {
                                     <span><span className='font-medium'>Category:</span> {category}</span>
                                 </div>
                                 <div className="card-actions justify-end">
-                                    <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
-                                    <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
+                                    {
+                                        showDetailsBtn ?
+                                            <Link to={`/book/${_id}`} className="btn w-full btn-primary">Details</Link>
+                                            :
+                                            <>
+                                                <Link to={`/update-book/${_id}`} className="btn btn-primary">Update</Link>
+                                                <button onClick={() => handleDelete(book._id)} className="btn btn-error">Delete</button>
+                                            </>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -80,7 +88,8 @@ const BookCard = ({ book }) => {
 };
 
 BookCard.propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
+    showDetailsBtn: PropTypes.bool
 }
 
 export default BookCard;
