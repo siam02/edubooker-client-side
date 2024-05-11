@@ -13,6 +13,7 @@ import AddCategory from "../pages/AddCategory";
 import CategoryDetails from "../pages/CategoryDetails";
 import ErrorPage from "../pages/ErrorPage";
 import BookDetails from "../pages/BookDetails";
+import BorrowedBooks from "../pages/BorrowedBooks";
 
 const routes = createBrowserRouter([
     {
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
                 path: '/category/:id',
                 element:<PrivateRoutes><CategoryDetails></CategoryDetails></PrivateRoutes>,
                 loader: ({params}) => fetch(`http://localhost:5000/category/${params.id}`)
+            },
+            {
+                path:'/borrowed-books',
+                element:<PrivateRoutes><BorrowedBooks></BorrowedBooks></PrivateRoutes>
             }
         ]
     }
