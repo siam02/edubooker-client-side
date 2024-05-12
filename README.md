@@ -41,4 +41,5 @@ To start using EduBooker, simply visit the live site and sign up for an account.
 - React Tooltip
 - React Toastify
 - SweetAlert2
+- React Rating
 
