@@ -48,17 +48,17 @@ const routes = createBrowserRouter([
             {
                 path:'/update-book/:id',
                 element:<PrivateRoutes><UpdateBook></UpdateBook></PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
+                loader: ({params}) => fetch(`https://edubooker-server-side.vercel.app/book/${params.id}`)
             },
             {
                 path:'/book/:id',
                 element:<PrivateRoutes><BookDetails></BookDetails></PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
+                loader: ({params}) => fetch(`https://edubooker-server-side.vercel.app/book/${params.id}`)
             },
             {
                 path:'/categories',
                 element:<Categories></Categories>,
-                loader: () => fetch('http://localhost:5000/category')
+                loader: () => fetch('https://edubooker-server-side.vercel.app/category')
             },
             {
                 path:'/add-category',
@@ -67,7 +67,7 @@ const routes = createBrowserRouter([
             {
                 path: '/category/:id',
                 element:<PrivateRoutes><CategoryDetails></CategoryDetails></PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:5000/category/${params.id}`)
+                loader: ({params}) => fetch(`https://edubooker-server-side.vercel.app/category/${params.id}`)
             },
             {
                 path:'/borrowed-books',

@@ -56,7 +56,7 @@ const Navbar = ({theme}) => {
                             {navLinks}
                         </ul>
                     </div>
-                    <Link className="btn btn-ghost text-xl">
+                    <Link to="/" className="btn btn-ghost text-xl">
                         <img src={logo} alt="" width={24} />
                         {siteName}
                     </Link>
