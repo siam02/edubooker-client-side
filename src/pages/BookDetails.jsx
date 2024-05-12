@@ -138,7 +138,7 @@ const BookDetails = () => {
                         /></span>
                     </div>
                     <div className="flex gap-4 justify-end mt-8">
-                        <button disabled={bookQuantity > 0 ? false : true} className="btn btn-primary rounded-lg sm:text-lg !h-auto sm:px-7 sm:py-4 font-semibold" onClick={() => document.getElementById('borrow_modal').showModal()}>Borrow</button>
+                        <button disabled={bookQuantity === 0 || is_borrowed === true ? true : false} className="btn btn-primary rounded-lg sm:text-lg !h-auto sm:px-7 sm:py-4 font-semibold" onClick={() => document.getElementById('borrow_modal').showModal()}>{is_borrowed ? 'Already Borrowed' : "Borrow"}</button>
                     </div>
                 </div>
             </div>
