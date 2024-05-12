@@ -44,15 +44,6 @@ const AllBooks = () => {
 
         })
 
-
-
-
-        // fetch()
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         setBooks(data);
-        //         setLoading(false);
-        //     })
     }, [currentPage, itemsPerPage]);
 
     const handleItemsPerPage = e => {
@@ -110,8 +101,8 @@ const AllBooks = () => {
                 <title>All Books - {siteName}</title>
             </Helmet>
             <div className="flex justify-between mb-4 lg:flex-row flex-col">
-                <h2 className="text-3xl font-bold mb-4">All Books</h2>
-                <div className="space-x-4">
+                <h2 className="text-3xl font-bold lg:text-left text-center mb-4">All Books</h2>
+                <div className="flex gap-4 justify-center flex-wrap">
                     <button className="btn" onClick={handleFilter}>Show available books</button>
                     <details className="dropdown">
                         <summary className="m-1 btn">View By <MdKeyboardArrowDown className="w-6 h-6" /></summary>
