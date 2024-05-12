@@ -53,6 +53,14 @@ const AllBooks = () => {
         }
     }
 
+    const handleFilter = () => {
+        setLoading(true);
+        const newBooks = books.filter(book => book.quantity > 0);
+        setBooks(newBooks);
+        setLoading(false);
+
+    }
+
     const handleSort = () => {
         setLoading(true);
         fetch(`http://localhost:5000/book-sort-by-rating`)
@@ -76,7 +84,8 @@ const AllBooks = () => {
             </Helmet>
             <div className="flex justify-between mb-4 lg:flex-row flex-col">
                 <h2 className="text-3xl font-bold mb-4">All Books</h2>
-                <div>
+                <div className="space-x-4">
+                    <button className="btn" onClick={handleFilter}>Show available books</button>
                     <details className="dropdown">
                         <summary className="m-1 btn">Sort By</summary>
                         <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
