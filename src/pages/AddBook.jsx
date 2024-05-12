@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const AddBook = () => {
 
@@ -11,7 +12,7 @@ const AddBook = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -37,15 +38,8 @@ const AddBook = () => {
 
         const newBook = { image, name, quantity, short_description, rating, author_name, category }
 
-        fetch('http://localhost:5000/book', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(newBook)
-        })
-            .then(res => res.json())
-            .then(data => {
+        axios.post('http://localhost:5000/book', newBook, { withCredentials: true })
+            .then(({ data }) => {
                 setAddText("Add");
                 if (data.insertedId) {
                     Swal.fire({
@@ -61,7 +55,6 @@ const AddBook = () => {
             .catch(error => {
                 toast.error(error);
             })
-
 
     }
 

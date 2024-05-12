@@ -5,6 +5,7 @@ import BookCard from "../components/BookCard";
 import { toast } from "react-toastify";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import BookTable from "../components/BookTable";
+import axios from "axios";
 
 const AllBooks = () => {
 
@@ -29,12 +30,29 @@ const AllBooks = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:5000/book?page=${currentPage}&size=${itemsPerPage}`)
-            .then(res => res.json())
-            .then(data => {
-                setBooks(data);
-                setLoading(false);
-            })
+
+        const API = `http://localhost:5000/book?page=${currentPage}&size=${itemsPerPage}`;
+
+        axios.get(API, {withCredentials:true})
+        .then (res => {
+            setBooks(res.data),
+            setLoading(false);
+        })
+        .catch(err => {
+            setLoading(false);
+            toast.error(err.message);
+
+        })
+
+
+
+
+        // fetch()
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         setBooks(data);
+        //         setLoading(false);
+        //     })
     }, [currentPage, itemsPerPage]);
 
     const handleItemsPerPage = e => {

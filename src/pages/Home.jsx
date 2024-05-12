@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { toast } from "react-toastify";
 import CategoryCard from "../components/CategoryCard";
@@ -15,7 +15,6 @@ import CategoryCard from "../components/CategoryCard";
 const Home = () => {
 
     const { siteName } = useContext(SiteDetailsContext);
-    const latestBooks = useLoaderData();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -51,9 +50,13 @@ const Home = () => {
                             loop={true}
                             className="rounded-xl"
                         >
-                            {
-                                latestBooks.map(book => <SwiperSlide key={book._id} className="rounded-xl"><img src={book.image} className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>)
-                            }
+                            
+                            <SwiperSlide className="rounded-xl"><img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/c0e192e5c_53062.jpg" className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>
+                            <SwiperSlide className="rounded-xl"><img src="https://pathakshamabesh.com/wp-content/uploads/2022/02/4084a0711c388099e55c08e2c0f28a25.jpg" className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>
+                            <SwiperSlide className="rounded-xl"><img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300i/5107.jpg" className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>
+                            <SwiperSlide className="rounded-xl"><img src="https://m.media-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_.jpg" className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>
+                            <SwiperSlide className="rounded-xl"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg" className="rounded-xl mx-auto h-96" alt="" /></SwiperSlide>
+                            
                         </Swiper>
                     </div>
                 </div>

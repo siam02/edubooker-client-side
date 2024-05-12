@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
 
@@ -41,7 +42,15 @@ const Login = () => {
         signIn(email, password)
             .then(() => {
                 toast.success("Logged in success");
-                navigate(location?.state ? location.state : '/');
+
+                const loggedInUser = { email };
+
+                axios.post('http://localhost:5000/jwt', loggedInUser, {withCredentials: true})
+                .then(res => {
+                    if (res.data.success) {
+                        navigate(location?.state ? location.state : '/');
+                    }
+                })
             })
             .catch(error => {
                 toast.error(error.message);

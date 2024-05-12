@@ -23,8 +23,7 @@ const routes = createBrowserRouter([
         children:[
             {
                 path: '/',
-                element:<Home></Home>,
-                loader: () => fetch(`http://localhost:5000/book?page=0&size=5`)
+                element:<Home></Home>
             },
             {
                 path:'/login',
