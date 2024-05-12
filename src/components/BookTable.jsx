@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import Rating from 'react-rating';
 import { Link } from 'react-router-dom';
+import { FaRegStar, FaStar } from "react-icons/fa";
 import Swal from 'sweetalert2';
 const BookTable = ({ books }) => {
 
@@ -56,7 +58,14 @@ const BookTable = ({ books }) => {
                     {loadBooks.map(book =>
                         <tr key={book._id}>
                             <td className="py-2">{book.name}</td>
-                            <td className="py-2">{book.rating}</td>
+                            <td className="py-2">
+                                <Rating
+                                    initialRating={book.rating}
+                                    emptySymbol={<FaRegStar />}
+                                    fullSymbol={<FaStar />}
+                                    readonly
+                                />
+                            </td>
                             <td className="py-2">{book.author_name}</td>
                             <td className="py-2">{book.category}</td>
                             <td className="py-2">
