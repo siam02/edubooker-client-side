@@ -102,7 +102,7 @@ const AllBooks = () => {
             </Helmet>
             <div className="flex justify-between mb-4 lg:flex-row flex-col">
                 <h2 className="text-3xl font-bold lg:text-left text-center mb-4">All Books</h2>
-                <div className="flex gap-4 justify-center flex-wrap">
+                <div className="flex gap-4 justify-center items-center flex-wrap">
                     <button className="btn" onClick={handleFilter}>Show available books</button>
                     <details className="dropdown">
                         <summary className="m-1 btn">View By <MdKeyboardArrowDown className="w-6 h-6" /></summary>
