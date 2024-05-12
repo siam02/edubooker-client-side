@@ -21,7 +21,7 @@ const AddCategory = () => {
 
         const newCategory = { image, name }
 
-        fetch('http://localhost:5000/category', {
+        fetch('https://edubooker-server-side.vercel.app/category', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

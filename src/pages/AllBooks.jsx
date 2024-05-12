@@ -23,7 +23,7 @@ const AllBooks = () => {
     const pages = [...Array(numberOfPages).keys()];
 
     useEffect(() => {
-        fetch('http://localhost:5000/bookCount')
+        fetch('https://edubooker-server-side.vercel.app/bookCount')
             .then(res => res.json())
             .then(data => setCount(data.count))
     }, [])
@@ -31,7 +31,7 @@ const AllBooks = () => {
     useEffect(() => {
         setLoading(true);
 
-        const API = `http://localhost:5000/book?page=${currentPage}&size=${itemsPerPage}`;
+        const API = `https://edubooker-server-side.vercel.app/book?page=${currentPage}&size=${itemsPerPage}`;
 
         axios.get(API, {withCredentials:true})
         .then (res => {
@@ -90,7 +90,7 @@ const AllBooks = () => {
 
     const handleSort = () => {
         setLoading(true);
-        fetch(`http://localhost:5000/book-sort-by-rating`)
+        fetch(`https://edubooker-server-side.vercel.app/book-sort-by-rating`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);

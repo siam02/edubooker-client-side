@@ -25,7 +25,7 @@ const BookCard = ({ book, showDetailsBtn, is_borrowed, returnDate, borrowedDate 
             if (result.isConfirmed) {
 
 
-                fetch(`http://localhost:5000/book/${id}`, {
+                fetch(`https://edubooker-server-side.vercel.app/book/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -57,7 +57,7 @@ const BookCard = ({ book, showDetailsBtn, is_borrowed, returnDate, borrowedDate 
             if (result.isConfirmed) {
 
 
-                fetch(`http://localhost:5000/borrowed-book/${id}`, {
+                fetch(`https://edubooker-server-side.vercel.app/borrowed-book/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -66,7 +66,7 @@ const BookCard = ({ book, showDetailsBtn, is_borrowed, returnDate, borrowedDate 
 
                             const updateBook = { quantity: quantity + 1 };
 
-                            fetch(`http://localhost:5000/update-book-quantity/${id}`, {
+                            fetch(`https://edubooker-server-side.vercel.app/update-book-quantity/${id}`, {
                                 method: 'PUT',
                                 headers: {
                                     'content-type': 'application/json'

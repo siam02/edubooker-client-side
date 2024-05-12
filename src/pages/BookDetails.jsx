@@ -19,7 +19,7 @@ const BookDetails = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/borrowed-book-count?id=${_id}&email=${user.email}`)
+        fetch(`https://edubooker-server-side.vercel.app/borrowed-book-count?id=${_id}&email=${user.email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.count > 0) {
@@ -55,7 +55,7 @@ const BookDetails = () => {
 
             const borrowBook = { return_date, book_id, user_name, user_email, borrowed_date }
 
-            fetch('http://localhost:5000/borrowed-book', {
+            fetch('https://edubooker-server-side.vercel.app/borrowed-book', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -71,7 +71,7 @@ const BookDetails = () => {
 
                     const updateBook = { quantity: newBookQuantity };
 
-                    fetch(`http://localhost:5000/update-book-quantity/${_id}`, {
+                    fetch(`https://edubooker-server-side.vercel.app/update-book-quantity/${_id}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'

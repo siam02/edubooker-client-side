@@ -37,7 +37,7 @@ const UpdateBook = () => {
 
         const updateBook = { image, name, rating, author_name, category }
 
-        fetch(`http://localhost:5000/book/${_id}`, {
+        fetch(`https://edubooker-server-side.vercel.app/book/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -65,7 +65,7 @@ const UpdateBook = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/category`)
+        fetch(`https://edubooker-server-side.vercel.app/category`)
             .then(res => res.json())
             .then(data => {
                 setCategories(data);

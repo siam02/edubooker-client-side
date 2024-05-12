@@ -19,7 +19,7 @@ const BookTable = ({ books }) => {
             if (result.isConfirmed) {
 
 
-                fetch(`http://localhost:5000/book/${id}`, {
+                fetch(`https://edubooker-server-side.vercel.app/book/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

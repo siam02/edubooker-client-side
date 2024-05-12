@@ -19,7 +19,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/category`)
+        fetch(`https://edubooker-server-side.vercel.app/category`)
             .then(res => res.json())
             .then(data => {
                 setCategories(data);

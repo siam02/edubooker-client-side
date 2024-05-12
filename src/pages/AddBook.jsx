@@ -38,7 +38,7 @@ const AddBook = () => {
 
         const newBook = { image, name, quantity, short_description, rating, author_name, category }
 
-        axios.post('http://localhost:5000/book', newBook, { withCredentials: true })
+        axios.post('https://edubooker-server-side.vercel.app/book', newBook, { withCredentials: true })
             .then(({ data }) => {
                 setAddText("Add");
                 if (data.insertedId) {
@@ -59,7 +59,7 @@ const AddBook = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/category`)
+        fetch(`https://edubooker-server-side.vercel.app/category`)
             .then(res => res.json())
             .then(data => {
                 setCategories(data);

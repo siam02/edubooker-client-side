@@ -14,7 +14,7 @@ const BorrowedBooks = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/borrowed-book/${user.email}`)
+        fetch(`https://edubooker-server-side.vercel.app/borrowed-book/${user.email}`)
             .then(res => res.json())
             .then(data => {
                 setBooks(data)

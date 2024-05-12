@@ -20,7 +20,7 @@ const CategoryDetails = () => {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/book-by-category/${name}`)
+        fetch(`https://edubooker-server-side.vercel.app/book-by-category/${name}`)
             .then(res => res.json())
             .then(data => {
                 setBooks(data);
@@ -45,7 +45,7 @@ const CategoryDetails = () => {
             if (result.isConfirmed) {
 
 
-                fetch(`http://localhost:5000/category/${id}`, {
+                fetch(`https://edubooker-server-side.vercel.app/category/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

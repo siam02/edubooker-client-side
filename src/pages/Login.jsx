@@ -45,7 +45,7 @@ const Login = () => {
 
                 const loggedInUser = { email };
 
-                axios.post('http://localhost:5000/jwt', loggedInUser, {withCredentials: true})
+                axios.post('https://edubooker-server-side.vercel.app/jwt', loggedInUser, {withCredentials: true})
                 .then(res => {
                     if (res.data.success) {
                         navigate(location?.state ? location.state : '/');
