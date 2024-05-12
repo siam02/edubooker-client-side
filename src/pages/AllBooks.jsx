@@ -3,6 +3,8 @@ import { SiteDetailsContext } from "../providers/SiteDetailsProvider";
 import { Helmet } from "react-helmet";
 import BookCard from "../components/BookCard";
 import { toast } from "react-toastify";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import BookTable from "../components/BookTable";
 
 const AllBooks = () => {
 
@@ -13,6 +15,7 @@ const AllBooks = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [count, setCount] = useState(0);
+    const [view, setView] = useState("card");
 
     const numberOfPages = Math.ceil(count / itemsPerPage);
 
@@ -61,6 +64,12 @@ const AllBooks = () => {
 
     }
 
+    const handleView = view => {
+        setLoading(true);
+        setView(view);
+        setLoading(false);
+    }
+
     const handleSort = () => {
         setLoading(true);
         fetch(`http://localhost:5000/book-sort-by-rating`)
@@ -87,7 +96,14 @@ const AllBooks = () => {
                 <div className="space-x-4">
                     <button className="btn" onClick={handleFilter}>Show available books</button>
                     <details className="dropdown">
-                        <summary className="m-1 btn">Sort By</summary>
+                        <summary className="m-1 btn">View By <MdKeyboardArrowDown className="w-6 h-6" /></summary>
+                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                            <li><button onClick={() => handleView("table")}>Table</button></li>
+                            <li><button onClick={() => handleView("card")}>Card</button></li>
+                        </ul>
+                    </details>
+                    <details className="dropdown">
+                        <summary className="m-1 btn">Sort By <MdKeyboardArrowDown className="w-6 h-6" /></summary>
                         <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                             <li><button onClick={handleSort}>Rating</button></li>
                         </ul>
@@ -97,9 +113,19 @@ const AllBooks = () => {
             {
                 loading ? <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                     :
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {books.map((book) => <BookCard key={book._id} book={book} ></BookCard>)}
-                    </div>
+                    <>
+                        {
+                            view === "card" &&
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {books.map((book) => <BookCard key={book._id} book={book} ></BookCard>)}
+                            </div>
+                        }
+                        {
+                            view === "table" &&
+                            <BookTable books={books}></BookTable>
+                        }
+                    </>
+
             }
 
             <div className='pagination'>
