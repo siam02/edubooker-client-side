@@ -26,9 +26,9 @@ const SearchBar = ({ setLoading, setBooks, currentPage, itemsPerPage, setCount }
                 }
                 setLoading(false);
             })
-            .catch(err => {
+            .catch(error => {
                 setLoading(false);
-                toast.error(err.message);
+                toast.error(error.message);
 
             })
     }
