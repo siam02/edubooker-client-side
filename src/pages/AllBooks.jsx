@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import BookTable from "../components/BookTable";
 import axios from "axios";
+import SearchBar from "../components/SearchBar";
 
 const AllBooks = () => {
 
@@ -33,16 +34,16 @@ const AllBooks = () => {
 
         const API = `https://edubooker-server-side.vercel.app/book?page=${currentPage}&size=${itemsPerPage}`;
 
-        axios.get(API, {withCredentials:true})
-        .then (res => {
-            setBooks(res.data),
-            setLoading(false);
-        })
-        .catch(err => {
-            setLoading(false);
-            toast.error(err.message);
+        axios.get(API, { withCredentials: true })
+            .then(res => {
+                setBooks(res.data),
+                setLoading(false);
+            })
+            .catch(err => {
+                setLoading(false);
+                toast.error(err.message);
 
-        })
+            })
 
     }, [currentPage, itemsPerPage]);
 
@@ -101,7 +102,10 @@ const AllBooks = () => {
                 <title>All Books - {siteName}</title>
             </Helmet>
             <div className="flex justify-between mb-4 lg:flex-row flex-col">
-                <h2 className="text-3xl font-bold lg:text-left text-center mb-4">All Books</h2>
+                <div className="flex gap-4 items-center mb-4">
+                    <h2 className="text-3xl font-bold lg:text-left text-center">All Books</h2>
+                    <SearchBar setLoading={setLoading} setBooks={setBooks} currentPage={currentPage} itemsPerPage={itemsPerPage} setCount={setCount}></SearchBar>
+                </div>
                 <div className="flex gap-4 justify-center items-center flex-wrap">
                     <button className="btn" onClick={handleFilter}>Show available books</button>
                     <details className="dropdown">
@@ -124,23 +128,31 @@ const AllBooks = () => {
                     :
                     <>
                         {
-                            view === "card" &&
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {books.map((book) => <BookCard key={book._id} book={book} ></BookCard>)}
-                            </div>
-                        }
-                        {
-                            view === "table" &&
-                            <BookTable books={books}></BookTable>
+                            books.length > 0 ?
+
+                                <>
+                                    {
+                                        view === "card" &&
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                            {books.map((book) => <BookCard key={book._id} book={book} ></BookCard>)}
+                                        </div>
+                                    }
+                                    {
+                                        view === "table" &&
+                                        <BookTable books={books}></BookTable>
+                                    }
+                                </>
+
+                                :
+
+                                <div className="text-center text-xl text-red-600 my-24 font-medium">
+                                    No books are available with your searched term.
+                                </div>
                         }
                     </>
 
             }
 
-            <div className='pagination'>
-
-
-            </div>
             <div className="flex justify-center mt-12 items-center gap-3">
                 <div className="join">
                     <button className="join-item btn" onClick={handlePrevPage}>«</button>
